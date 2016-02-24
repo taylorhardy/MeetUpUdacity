@@ -1,3 +1,5 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <html>
 <head>
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
@@ -26,44 +28,52 @@
 		</md-button>
 		<md-card ng-show="$root.showMore">
 			<md-content layout-padding>
-				<h2>Add an Event</h2>
-				<div layout="row">
-					<md-input-container class="md-block">
-						<label>Event Name</label>
-						<input ng-model="$root.eventName"/>
-					</md-input-container>
-					<md-input-container class="md-block">
-						<label>Event Type</label>
-						<input ng-model="$root.eventType"/>
-					</md-input-container>
-					<md-input-container class="md-block">
-						<label>Capacity</label>
-						<input ng-model="$root.capacity"/>
-					</md-input-container>
-					<md-input-container class="md-block">
-						<label>Start Time</label>
-						<input ng-model="$root.startTime"/>
-					</md-input-container>
-					<md-input-container class="md-block">
-						<label>End Time</label>
-						<input ng-model="$root.endTime"/>
-					</md-input-container>
-					<md-input-container class="md-block">
-						<label>Location</label>
-						<input ng-model="$root.location"/>
-					</md-input-container>
-				</div>
+				<form name="addEvent">
+					<h2>Add an Event</h2>
+					<div layout="row">
+						<md-input-container class="md-block">
+							<label for="eventName">Event Name</label>
+							<input id="eventName" ng-model="$root.eventName" required/>
+						</md-input-container>
+						<md-input-container class="md-block">
+							<label for="eventType">Event Type</label>
+							<input id="eventType" ng-model="$root.eventType" required/>
+						</md-input-container>
+						<md-input-container class="md-block">
+							<label for="capacity">Capacity</label>
+							<input id="capacity" ng-model="$root.capacity" required/>
+						</md-input-container>
+						<md-input-container class="md-block">
+							<label for="startTime">Start Time</label>
+							<input id="startTime" ng-model="$root.startTime" required/>
+						</md-input-container>
+						<md-input-container class="md-block">
+							<label for="endTime">End Time</label>
+							<input id="endTime" ng-model="$root.endTime" required/>
+						</md-input-container>
+						<md-input-container class="md-block">
+							<label for="location">Location</label>
+							<input id="location" ng-model="$root.location" required/>
+						</md-input-container>
+					</div>
 
-				<md-input-container class="md-block">
-					<label>Description</label>
-					<textarea ng-model="$root.description" rows="5" md-maxlength="150" md-select-on-focus></textarea>
-				</md-input-container>
-				<div layout="row">
-					<md-button class="md-raised md-primary" ng-click="$root.addEvent()"><span
-							class="glyphicon glyphicon-plus"></span> Add Event
-					</md-button>
-				</div>
+					<md-input-container class="md-block">
+						<label for="description">Description</label>
+						<textarea id="description" ng-model="$root.description" rows="5" md-maxlength="150"
+								  md-select-on-focus></textarea>
+					</md-input-container>
+					<md-input-container>
+						<input ng-model="$root.addAttending">
+					</md-input-container>
+					<md-button class="md-raised md-primary" ng-click="$root.addPeople()">Invite Person</md-button>
+					<md-chips ng-model="personArray" readonly="true"></md-chips>
 
+					<div layout="row">
+						<md-button class="md-raised md-primary" ng-click="$root.addEvent()"  ng-disabled="!addEvent.$valid"><span
+								class="glyphicon glyphicon-plus"></span> Add Event
+						</md-button>
+					</div>
+				</form>
 			</md-content>
 
 		</md-card>
@@ -85,7 +95,7 @@
 							<md-chips ng-model="item.going" readonly="true"></md-chips>
 						</div>
 
-						</md-chips>
+
 						<md-button ng-if="$root.signedIn" class="md-secondary" ng-disabled="item.attending"
 								   ng-click="$root.addGoing($index)">
 							<span ng-if="!item.attending">Lets Go!</span> <span ng-if="item.attending">Going!</span>

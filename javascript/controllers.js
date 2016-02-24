@@ -2,12 +2,14 @@
 //all code is either using the angular.js, angular material design, bootstrap frameworks or my own work.
 var appControllers = angular.module('appControllers', []);
 
-appControllers.controller('appControllers', ['$scope', '$uibModal', '$log', '$rootScope', function ($scope, $uibModal, $log, $rootScope) {
+appControllers.controller('appControllers', ['$scope', '$uibModal', '$log', '$rootScope', '$timeout', function ($scope, $uibModal, $log, $rootScope, $timeout) {
 	$rootScope.signedIn = false;
 	$rootScope.showMore = false;
 	$rootScope.hideAdd = true;
 	$rootScope.attending = false;
 	$scope.search = "";
+	$scope.personArray = [];
+	$rootScope.addAttending = "";
 
 	$scope.events = [{
 		eventName: 'Brunch this weekend?',
@@ -55,17 +57,24 @@ appControllers.controller('appControllers', ['$scope', '$uibModal', '$log', '$ro
 		attending: false
 	}];
 
+	$rootScope.addPeople = function () {
+		$scope.personArray.push($rootScope.addAttending);
+		console.log();
+		$rootScope.addAttending = "";
+	};
+
+
 	$rootScope.addEvent = function () {
 		var tempObject = {
 			eventName: $rootScope.eventName,
-			eventType:  $rootScope.eventType,
+			eventType: $rootScope.eventType,
 			capacity: $rootScope.capacity,
 			location: $rootScope.location,
 			startTime: $rootScope.startTime,
 			endTime: $rootScope.endTime,
 			description: $rootScope.description,
 			createdBy: $rootScope.user.firstName + " " + $rootScope.user.lastName,
-			going: []
+			going: $scope.personArray
 		};
 		$scope.events.push(tempObject);
 		console.log("the following event was added", tempObject);
@@ -77,12 +86,12 @@ appControllers.controller('appControllers', ['$scope', '$uibModal', '$log', '$ro
 		$rootScope.endTime = "";
 		$rootScope.description = "";
 	};
-		$rootScope.addGoing = function(index){
-			var name = $rootScope.user.firstName;
-			$scope.events[index].going.push(name);
-			console.log(index);
-			$scope.events[index].attending = true;
-		};
+	$rootScope.addGoing = function (index) {
+		var name = $rootScope.user.firstName;
+		$scope.events[index].going.push(name);
+		console.log(index);
+		$scope.events[index].attending = true;
+	};
 	$rootScope.toggleEvent = function () {
 		if ($rootScope.showMore == true) {
 			$rootScope.showMore = false;
