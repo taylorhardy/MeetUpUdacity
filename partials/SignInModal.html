@@ -1,0 +1,43 @@
+<div class="modal-header">
+	<h3 class="modal-title">I'm a modal!</h3>
+</div>
+<div class="modal-body">
+	<form name="signup">
+	<md-input-container class="md-block" flex-gt-sm>
+		<label>First name</label>
+		<input ng-model="$root.user.firstName" required ng-minlength="2" ng-maxlength="20">
+	</md-input-container>
+	<md-input-container class="md-block" flex-gt-sm>
+		<label>First name</label>
+		<input ng-model="$root.user.LastName" required ng-minlength="2" ng-maxlength="20">
+	</md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm>
+		<label>Email Address</label>
+		<input ng-model="$root.user.email" name="email" type="email" required ng-minlength="10" ng-maxlength="100" ng-pattern="/^.+@.+\..+$/">
+	</md-input-container>
+		<span ng-show="signup.email.$error.required && signup.email.$dirty">*Required</span>
+		<span ng-show="!signup.email.$error.required && signup.email.$error.email && signup.email.$dirty">*invalid email</span>
+
+	<md-input-container class="md-block" flex-gt-sm>
+		<label>Password</label>
+		<input ng-model="$root.password" type="password" id="password" name="password" ng-minlength="8" ng-maxlength="20"
+			   ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required/>
+
+	</md-input-container>
+	<span ng-show="!signup.password.$error.required && (signup.password.$error.minlength || signup.password.$error.maxlength) && signup.password.$dirty">*Passwords must be between 8 and 20 characters.</span>
+	<span ng-show="!signup.password.$error.required && !signup.password.$error.minlength && !signup.password.$error.maxlength && signup.password.$error.pattern && signup.password.$dirty">*Must contain one lower &amp; uppercase letter, and one non-alpha character (a number or a symbol.)</span>
+	<md-input-container class="md-block">
+		<label>Biography</label>
+		<textarea ng-model="$root.user.biography" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+	</md-input-container>
+	</form>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+	<button class="btn btn-primary" type="button" ng-disabled="!signup.$valid" ng-click="ok()">OK</button>
+	<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
+
+
+
